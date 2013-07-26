@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Electrons</string>
+    <string name="service_name">Electrons Service</string>
+
+
+    <string name="already_talking_message">It is rude to interrupt!</string>
+    <string name="default_text">What are you doing Dave?</string>
+    <string name="enter_speech_prompt">Please enter some text to speak:</string>
+    <string name="no_text_message">I have nothing to say</string>
+    <string name="speak">Speak</string>
+    <string name="speech_setup_failed_message">Speech setup failed</string>
+
+
+</resources>
