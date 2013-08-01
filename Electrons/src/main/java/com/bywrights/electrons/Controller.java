@@ -1,6 +1,11 @@
 package com.bywrights.electrons;
 
 import android.app.Application;
+import android.speech.tts.TextToSpeech;
+import android.util.Log;
+import android.widget.Toast;
+
+import com.bywrights.electrons.service.Voice;
 
 /**
  * Created by chris on 13-07-25.
@@ -61,5 +66,48 @@ import android.app.Application;
  */
 
 public class Controller extends Application {
+
+    public static final String
+        AUTHORITY = "com.bywrights.electrons",
+        TAG = AUTHORITY + ".Controller";
+
+    private static Controller
+        INSTANCE = null;
+    private Voice
+        voice_;
+
+    public static Controller sharedInstance() {
+        if (INSTANCE == null)
+            throw new IllegalStateException("Application not created yet!");
+        return INSTANCE;
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        Log.d(TAG, "onCreate");
+
+        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+            public void uncaughtException(Thread thread, Throwable ex) {
+                ex.printStackTrace();
+                Log.e( TAG, thread.getName(), ex );
+            }
+        } );
+
+        INSTANCE = this;
+        voice_ = new Voice();
+
+        voice_.onCreate( getBaseContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if (status != TextToSpeech.SUCCESS) {
+                    Toast.makeText(getBaseContext(), R.string.speech_setup_failed_message, 2).show();
+                }
+            }
+        });
+    }
+
+    public Voice voice() { return voice_; }
+
 
 }

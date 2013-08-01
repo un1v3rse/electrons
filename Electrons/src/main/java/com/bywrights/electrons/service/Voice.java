@@ -34,21 +34,21 @@ public class Voice {
         tts_ = new TextToSpeech(context, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
-                if (status == TextToSpeech.SUCCESS) {
+            if (status == TextToSpeech.SUCCESS) {
 
-                    status = tts_.setLanguage(Locale.US);
-                    if (status == TextToSpeech.LANG_MISSING_DATA
-                            || status == TextToSpeech.LANG_NOT_SUPPORTED) {
-                        Log.e(TAG, "This Language is not supported");
-                    }
-
-                } else {
-                    Log.e(TAG, "Initialization Failed!");
+                int lang_status = tts_.setLanguage(Locale.US);
+                if (lang_status == TextToSpeech.LANG_MISSING_DATA
+                        || lang_status == TextToSpeech.LANG_NOT_SUPPORTED) {
+                    Log.e(TAG, "This Language is not supported");
                 }
 
-                if (listener != null) {
-                    listener.onInit( status );
-                }
+            } else {
+                Log.e(TAG, "Initialization Failed!");
+            }
+
+            if (listener != null) {
+                listener.onInit( status );
+            }
             }
         });
     }
